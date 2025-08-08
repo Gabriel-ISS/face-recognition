@@ -1,15 +1,17 @@
 import cv2
 import os
-imagesPath = "C:/Users/Pablo Medina/PycharmProjects/PythonProject/faceRecognition2/input_images"
+imagesPath = os.path.curdir + "/input_images"
 if not os.path.exists("faces"):
      os.makedirs("faces")
      print("Nueva carpeta: faces")
 # Detector facial
-faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml") # type: ignore
 count = 0
 for imageName in os.listdir(imagesPath):
      print(imageName)
      image = cv2.imread(imagesPath + "/" + imageName)
+     if not image:
+          raise ValueError(f"Error al leer la imagen: {imageName}")
      faces = faceClassif.detectMultiScale(image, 1.1, 5)
      for (x, y, w, h) in faces:
           #cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
