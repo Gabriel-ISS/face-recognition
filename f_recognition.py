@@ -23,6 +23,8 @@ facesEncodings = []
 facesNames = []
 for file_name in os.listdir(imageFacesPath):
      image = cv2.imread(imageFacesPath + "/" + file_name)
+     if not image:
+          raise ValueError(f"Error al leer la imagen: {file_name}")
      image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
      f_coding = face_recognition.face_encodings(image, known_face_locations=[(0, 150, 150, 0)])[0]
      facesEncodings.append(f_coding)
@@ -33,7 +35,7 @@ for file_name in os.listdir(imageFacesPath):
 # LEYENDO VIDEO
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 # Detector facial
-faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml") # type: ignore
 while True:
      ret, frame = cap.read()
      if ret == False:
