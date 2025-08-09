@@ -2,7 +2,7 @@ import cv2
 import os
 imagesPath = os.path.curdir + "/input_images"
 if not os.path.exists("faces"):
-     os.makedirs("faces")
+     os.makedirs("detected_faces")
      print("Nueva carpeta: faces")
 # Detector facial
 faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml") # type: ignore
